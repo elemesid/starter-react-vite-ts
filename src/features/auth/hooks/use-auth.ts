@@ -1,23 +1,34 @@
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { UseFormProps, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type LoginSchema, auth, type RegisterSchema, ResponseAuth } from "~/services";
+import {
+  type LoginSchema,
+  auth,
+  type RegisterSchema,
+  ResponseAuth,
+  ForgotPasswordSchema,
+  SetPasswordSchema,
+} from "~/services";
 import { ZodEffects, ZodType, ZodTypeAny } from "zod";
 // import { useDisClosure } from "~/hooks";
 // import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { HttpError } from "~/@types";
 // import { useToast } from "~/context/Toast";
 
-type AuthType = "login" | "register";
+type AuthType = "login" | "register" | "forgotPassword" | "setPassword";
 
 type AuthSchema = {
   login: LoginSchema;
   register: RegisterSchema;
+  forgotPassword: ForgotPasswordSchema;
+  setPassword: SetPasswordSchema;
 };
 
 const authFunctions: Record<AuthType, (data: any) => Promise<any>> = {
   login: auth.login,
   register: auth.register,
+  forgotPassword: auth.forgotPassword,
+  setPassword: auth.setPassword,
 };
 
 export const useAuth = <T extends AuthType>(
