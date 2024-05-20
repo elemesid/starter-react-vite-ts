@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { Button } from "./components";
 
 export const App = () => {
   const [count, setCount] = useState(0);
 
-  return <div>React Vite TS Starter</div>;
+  return <Button onClick={() => setCount((c) => c + 1)}>Click Me {count}</Button>;
 };

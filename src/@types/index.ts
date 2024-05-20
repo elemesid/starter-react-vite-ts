@@ -113,3 +113,9 @@ export interface MediaResponse {
     url: string;
   };
 }
+
+export type BaseKey = string | number;
+export type BaseRecord = {
+  id?: BaseKey;
+  [key: string]: any;
+};

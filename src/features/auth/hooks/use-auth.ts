@@ -10,10 +10,7 @@ import {
   SetPasswordSchema,
 } from "~/services";
 import { ZodEffects, ZodType, ZodTypeAny } from "zod";
-// import { useDisClosure } from "~/hooks";
-// import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { HttpError } from "~/@types";
-// import { useToast } from "~/context/Toast";
 
 type AuthType = "login" | "register" | "forgotPassword" | "setPassword";
 
