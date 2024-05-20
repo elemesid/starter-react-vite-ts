@@ -6,9 +6,9 @@ import {
   type LoginSchema,
   auth,
   type RegisterSchema,
-  ResponseAuth,
   ForgotPasswordSchema,
   SetPasswordSchema,
+  AuthActionResponse,
 } from "~/services";
 import { ZodEffects, ZodType, ZodTypeAny } from "zod";
 import { HttpError } from "~/@types";
@@ -22,7 +22,11 @@ type AuthSchema = {
   setPassword: SetPasswordSchema;
 };
 
-const authFunctions: Record<AuthType, (data: any) => Promise<any>> = {
+type AuthFunctions = {
+  [K in AuthType]: (data: AuthSchema[K]) => Promise<AuthActionResponse>;
+};
+
+const authFunctions: AuthFunctions = {
   login: auth.login,
   register: auth.register,
   forgotPassword: auth.forgotPassword,
@@ -33,7 +37,7 @@ export const useAuth = <T extends AuthType>(
   type: T,
   resolver: ZodType<AuthSchema[T]> | ZodEffects<ZodTypeAny>,
   opts?: Omit<UseFormProps<AuthSchema[T]>, "resolver">,
-  optsMutation?: UseMutationOptions<ResponseAuth, HttpError, AuthSchema[T]>,
+  optsMutation?: UseMutationOptions<AuthActionResponse, HttpError, AuthSchema[T]>,
 ) => {
   const {
     control,
@@ -44,7 +48,7 @@ export const useAuth = <T extends AuthType>(
     resolver: zodResolver(resolver),
   });
 
-  const mutation = useMutation<ResponseAuth, HttpError, AuthSchema[T]>({
+  const mutation = useMutation<AuthActionResponse, HttpError, AuthSchema[T]>({
     ...optsMutation,
     mutationKey: [type],
     mutationFn: async (v) => {

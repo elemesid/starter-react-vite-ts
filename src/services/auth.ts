@@ -7,7 +7,7 @@ import { http } from "~/libs/axios";
 import dayjs from "dayjs";
 import { HttpError } from "~/@types";
 
-type AuthActionResponse = {
+export type AuthActionResponse = {
   success: boolean;
   redirectTo?: string;
   error?: HttpError | Error | null | undefined;
