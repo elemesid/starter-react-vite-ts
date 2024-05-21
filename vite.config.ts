@@ -23,7 +23,7 @@ function renderChunks(deps: Record<string, string>) {
   const chunks: Record<string, string[]> = {};
 
   Object.keys(deps).forEach((key) => {
-    if (["react", "react-router-dom", "react-dom"].includes(key)) return;
+    if (["react", "react-dom"].includes(key)) return;
     chunks[key] = [key];
   }, {});
 
@@ -55,7 +55,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ["react", "react-router-dom", "react-dom"],
+          vendor: ["react", "react-dom"],
           ...renderChunks(dependencies),
         },
       },
