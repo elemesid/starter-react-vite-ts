@@ -50,14 +50,7 @@ export const registerSchema = loginSchema
       userCategory: z.string().min(1, {
         message: "Kategori tidak boleh kosong",
       }),
-      email: z
-        .string()
-        .min(1, {
-          message: "Email tidak boleh kosong",
-        })
-        .email({
-          message: "Email tidak valid",
-        }),
+
       confirmPassword: z.string().min(1, {
         message: "Konfirmasi password tidak boleh kosong",
       }),
@@ -71,15 +64,8 @@ export const registerSchema = loginSchema
     return omit(v, ["confirmPassword"]);
   });
 
-export const forgotPasswordSchema = z.object({
-  email: z
-    .string()
-    .min(1, {
-      message: "Email tidak boleh kosong",
-    })
-    .email({
-      message: "Email tidak valid",
-    }),
+export const forgotPasswordSchema = loginSchema.pick({
+  email: true,
 });
 
 export const setPasswordSchema = loginSchema

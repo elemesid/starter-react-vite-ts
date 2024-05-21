@@ -8,6 +8,7 @@ export const App = () => {
       email: "",
       password: "",
     },
+    warnWhenUnsavedChanges: true,
   });
 
   return (
