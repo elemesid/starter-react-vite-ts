@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig } from "axios";
+import type { AxiosRequestConfig, Method } from "axios";
 import axios from "axios";
 
 import type { BaseResponse, HttpError } from "~/@types";
@@ -48,9 +48,10 @@ axiosInstance.interceptors.response.use(
 
 export { axiosInstance };
 
-type Method = "GET" | "POST" | "DELETE" | "PATCH" | "PUT";
-
-export const http = async <T>(method: Method, config: AxiosRequestConfig): Promise<BaseResponse & T> => {
+export const http = async <T>(
+  method: Method,
+  config: Omit<AxiosRequestConfig, "method">,
+): Promise<BaseResponse & T> => {
   try {
     const { data } = await axiosInstance({ ...config, method });
     return await Promise.resolve(data as BaseResponse & T);
